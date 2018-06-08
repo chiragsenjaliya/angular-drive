@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['api']], function () {
+	Route::post('/logout','Drive\\UserController@logout')->name('logout');
 });
+
+Route::post('register','Drive\\UserController@registerUser')->name('register');
