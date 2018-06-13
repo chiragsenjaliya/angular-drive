@@ -9,6 +9,10 @@ use App\Components\User\Contracts\IUserRepository;
 use App\Components\User\Repositories\MySQLUserRepository;
 use App\Components\User\Contracts\ICompanyRepository;
 use App\Components\User\Repositories\MySQLCompanyRepository;
+use App\Components\FolderFile\Contracts\IFolderFileRepository;
+use App\Components\FolderFile\Repositories\MySQLFolderFileRepository;
+use App\Components\FolderFile\Contracts\IFolderRepository;
+use App\Components\FolderFile\Repositories\MySQLFolderRepository;
 use Route;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
@@ -46,5 +50,7 @@ class AppServiceProvider extends ServiceProvider
         // bindings
         $this->app->bind(IUserRepository::class, MySQLUserRepository::class);
         $this->app->bind(ICompanyRepository::class, MySQLCompanyRepository::class);
+        $this->app->bind(IFolderRepository::class, MySQLFolderRepository::class);
+        $this->app->bind(IFolderFileRepository::class, MySQLFolderFileRepository::class);
     }
 }
