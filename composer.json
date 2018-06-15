@@ -11,7 +11,8 @@
         "laravel/framework": "5.6.*",
         "laravel/passport": "^5.0",
         "laravel/tinker": "^1.0",
-        "smartins/passport-multiauth": "1.0.1"
+        "smartins/passport-multiauth": "1.0.1",
+        "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

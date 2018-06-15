@@ -18,9 +18,9 @@ Route::group(['middleware' => ['api']], function () {
 	Route::post('/logout','Drive\\UserController@logout')->name('logout');	
 
 	//FolderFile Controller
-	Route::get('/folder-tree/{parent_id}','Drive\\FolderFileController@folderList')->name('folderList');
+	Route::get('/folder-tree/{slug?}','Drive\\FolderFileController@folderList')->name('folderList');
 	Route::post('/create-folder','Drive\\FolderFileController@createFolder')->name('createFolder');
-	Route::get('/get-folders-files/{parent_id?}','Drive\\FolderFileController@getFileFolder')->name('getFileFolder');
+	Route::get('/get-folders-files/{slug?}','Drive\\FolderFileController@getFileFolder')->name('getFileFolder');
 	
 });
 

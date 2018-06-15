@@ -18,6 +18,10 @@ class CreateFoldersTable extends Migration
             $table->integer('user_id');
             $table->integer('parent_id')->nullable('0');
             $table->string('name',50);
+            $table->string('slug',100);
+            $table->string('mime_type',50)->nullable();
+            $table->boolean('is_folder');
+            $table->text('meta_data')->nullable();
             $table->timestamps();
         });
     }

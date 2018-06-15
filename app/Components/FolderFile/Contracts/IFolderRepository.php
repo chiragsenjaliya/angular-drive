@@ -7,6 +7,20 @@ use App\Components\Core\Result;
 interface IFolderRepository
 {
     /**
+     * get parent id
+     * @param $slug
+     * @return Result
+     */
+    public function getParentId($slug);
+
+    /**
+     * get folder id
+     * @param $slug
+     * @return $id
+     */
+    public function getFolderId($slug);
+
+    /**
      * create new Folder
      *
      * @param array $payload
@@ -19,7 +33,7 @@ interface IFolderRepository
      * @param $parent_id
      * @return Result
      */
-    public function listFoldersByParentId($parent_id);
+    public function listFoldersBySlug($parent_id);
 
     /**
      * getparent

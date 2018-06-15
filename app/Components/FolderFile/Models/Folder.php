@@ -13,7 +13,7 @@ class Folder extends \Eloquent
      * @var array
      */
     protected $fillable = [
-        'user_id','name','parent_id'
+        'user_id','name','slug','parent_id','is_folder','mime_type','meta_data'
     ];    
 
     /**
