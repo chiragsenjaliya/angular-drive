@@ -14,6 +14,18 @@ class MySQLFolderRepository implements IFolderRepository
 {
 
     /**
+     * get Folder
+     * @param $slug
+     * @return Result
+     */
+    public function getFolderBySlug($slug)
+    {        
+        $Folder_data=Folder::where('slug',$slug)->first();
+        
+        return $Folder_data;
+    }
+
+    /**
      * get parent id
      * @param $slug
      * @return Result
@@ -83,6 +95,32 @@ class MySQLFolderRepository implements IFolderRepository
     }
 
     /**
+     * create new File
+     *
+     * 
+     * @param array $payload
+     * @return Result
+     */
+    public function createFile($payload)
+    {       
+
+        // create the Folder
+        $File = Folder::create([
+            'user_id' => Auth::guard('api')->user()->id,
+            'name' => $payload['name'],
+            'parent_id' => $payload['parent_id'],
+            'mime_type' => $payload['mime_type'],
+            'slug'=>(string) \Uuid::generate(),
+            'meta_data' => json_encode($payload['meta_data']),
+            'is_folder'=>0
+        ]);
+
+        if(!$File) return new Result(false,'Error While file uploading.',null, 403);      
+        
+        return new Result(true,'File uploaded.',$File,200);
+    }
+
+    /**
      * list all folders
      *
      * @return Result
@@ -91,12 +129,29 @@ class MySQLFolderRepository implements IFolderRepository
     {
         $parent_id=$this->getFolderId($slug);
            
-        $Folders=Folder::where('user_id',Auth::guard('api')->user()->id)->where('parent_id',$parent_id)->with(['children'=>function ($query)
+        $Folders=Folder::where('user_id',Auth::guard('api')->user()->id)->where('is_folder','1')->where('parent_id',$parent_id)->with(['children'=>function ($query)
             {
                 $query->where('is_folder',1);
             },'parent'])->get();
 
         return new Result(true,'Children Folders',$Folders,200);        
+    }
+
+    /**
+     * list all foldersfiles
+     *
+     * @return Result
+     */
+    public function listFolderFilesBySlug($slug)
+    {
+        $parent_id=$this->getFolderId($slug);
+           
+        $FolderFiles=Folder::where('user_id',Auth::guard('api')->user()->id)->where('parent_id',$parent_id)->with(['children'=>function ($query)
+            {
+                $query->where('is_folder',1);
+            },'parent'])->get();
+
+        return new Result(true,'Children FolderFiles',$FolderFiles,200);        
     }
 
     /**

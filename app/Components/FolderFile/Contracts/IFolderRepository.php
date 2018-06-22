@@ -7,6 +7,13 @@ use App\Components\Core\Result;
 interface IFolderRepository
 {
     /**
+     * get Folder
+     * @param $slug
+     * @return Result
+     */
+    public function getFolderBySlug($slug);
+
+    /**
      * get parent id
      * @param $slug
      * @return Result
@@ -27,6 +34,15 @@ interface IFolderRepository
      * @return Result
      */
     public function create($payload);
+
+    /**
+     * create new File
+     *
+     * 
+     * @param array $payload
+     * @return Result
+     */
+    public function createFile($payload);
 
     /**
      * list all folders

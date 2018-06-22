@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	$path=storage_path('app/public/74 File Data (5).csv[0]');	
+    echo $path;
 });

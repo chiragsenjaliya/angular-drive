@@ -7,6 +7,7 @@ use App\Components\FolderFile\Contracts\IFolderRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FolderCollection;
 use Auth;
+use File;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -63,13 +64,13 @@ class FolderFileController extends Controller
 
    	}
 
-   	public function breadcrumbFolder($parent_id,$array=[]){
+   	public function breadcrumbFolder($folderid,$array=[]){
 
    		$folder_array=[];
 
-        if($parent_id !=0 )
+        if($folderid !=0 )
 		{			
-			$getParent=$this->folderRepository->getParent($parent_id)->getData();
+			$getParent=$this->folderRepository->getParent($folderid)->getData();
     		$folder_array['id']=$getParent->slug;
     		$folder_array['name']=$getParent->name;
     		$array[]=$folder_array;	    		
@@ -103,7 +104,7 @@ class FolderFileController extends Controller
 	    		$folderdata['isActive']=true;
 	    		$folderdata['isFocused']=true;	    		
 	    	}
-	    	$folderdata['path']=$this->getFolderPath($value->id,$value->parent_id,$value->name);
+	    	$folderdata['path']=$this->getFolderPath($value->parent_id,$value->name);
 
 	    	if(count($value->children)>0)
 	    	{
@@ -130,7 +131,7 @@ class FolderFileController extends Controller
      * @param  array  $folders
      * @return array  $folderstree
      */
-	protected function getFolderPath($id,$parent_id,$path)
+	protected function getFolderPath($parent_id,$path)
 	{		
 		if($parent_id == 0)
 		{
@@ -145,7 +146,7 @@ class FolderFileController extends Controller
 	    		return $getParent->name.'/'.$path;
 
 	    	}else{	    		
-	    		return $this->getFolderPath($getParent->id,$getParent->parent_id,$getParent->name.'/'.$path);
+	    		return $this->getFolderPath($getParent->parent_id,$getParent->name.'/'.$path);
 	    	}
 			
 		}
@@ -191,8 +192,9 @@ class FolderFileController extends Controller
    			$folderdata=[];
 	    	$folderdata['id']=$folder->slug;
 	    	$folderdata['name']=$folder->name; 
-	    	$folderdata['path']=$this->getFolderPath($folder->id,$folder->parent_id,$folder->name);
-
+	    	$folderdata['path']=$this->getFolderPath($folder->parent_id,$folder->name);
+	    	$path = storage_path('app/public').'/'.Auth::guard('api')->user()->id.'/'.$folderdata['path'];
+			File::makeDirectory($path, $mode = 0777, true, true);
 			return $this->sendResponse(
 	            $results->getMessage(),
 	            $folderdata
@@ -213,19 +215,39 @@ class FolderFileController extends Controller
 
    	public function getFileFolder($slug="")
    	{   	
-   		$results = $this->folderRepository->listFoldersBySlug($slug);
-   		$parent_id=$this->folderRepository->getParentId($slug);
-   		$bradcrumb=$this->breadcrumbFolder($parent_id);
+   		$results = $this->folderRepository->listFolderFilesBySlug($slug);
+   		$folderid=$this->folderRepository->getFolderId($slug);
+   		$bradcrumb=$this->breadcrumbFolder($folderid);
 
    		if(count($results->getData())>0)
    		{
-   			$listfolders= $results->getData();   			
+   			$listfolders= $results->getData();
+   			$folderfiles=[];
+   			foreach ($listfolders as $key => $value) {
+   				
+   				if($value->is_folder==0)
+   				{
+   					$path=asset('storage/'.Auth::guard('api')->user()->id.'/'.$this->getFolderPath($value->parent_id,'').$value->name);
+   					$file_type=$this->getFileTypeHelper($value->mime_type);
+   				}
+   				else
+   				{
+   					$path="";
+   					$file_type="folder";
+   				}
 
-   			$folders=$this->buildFolderTree($listfolders); 
-
+   				$folderfiles[]=[
+   					'name'=>$value->name,
+   					'is_folder'=>$value->is_folder,
+   					'id'=>$value->slug,
+   					'file_type'=>$file_type,
+   					'url'=>$path,
+   					'meta_data'=>json_decode($value->meta_data,true)
+   				];
+   			}
 			return $this->sendResponse(
 	            $results->getMessage(),
-	            ['folderfile'=>$folders,'breadcrumb'=>$bradcrumb]
+	            ['folderfile'=>$folderfiles,'breadcrumb'=>$bradcrumb]
 	        );
 
    		}else{
@@ -235,5 +257,70 @@ class FolderFileController extends Controller
 	            ['folderfile'=>[],'breadcrumb'=>$bradcrumb]
 	        );
    		}
+   	}
+
+   	public function uploadFile(Request $request){
+   		$file=$request->file('fileItem');
+   		$slug=$request->slug;
+   		$folder=$this->folderRepository->getFolderBySlug($slug);
+
+   		if(count($folder)==0)
+   		{
+   			$folder_id=0;
+   		}
+   		else
+   		{
+   			$folder_id=$folder->id;
+   		}
+
+   		$path=Auth::guard('api')->user()->id.'/'.$this->getFolderPath($folder_id,'');
+   		$fileName =$file->getClientOriginalName();
+
+   		if(!File::isDirectory(storage_path('app/public/'.$path.'/')))
+   		{
+   			File::makeDirectory(storage_path('app/public/'.$path.'/'), $mode = 0777, true, true);
+   		}
+
+   		if(File::exists(storage_path('app/public/'.$path.'/'.$fileName)))
+   		{
+   			$fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'('.substr(md5(microtime()),rand(0,26),6).').'.$file->getClientOriginalExtension();
+   		}
+
+   		$filesave = $file->storeAs($path,$fileName,'public');
+
+   		if($filesave)
+   		{
+	   		$file_data=[];
+	   		$file_data['name']=$fileName;
+	   		$file_data['mime_type']=$file->getClientMimeType();
+	   		$file_data['parent_id']=$folder_id;
+	   		$file_data['meta_data']=['size'=>$file->getClientSize() ,'extention'=>$file->getClientOriginalExtension()];
+
+	   		$results = $this->folderRepository->createFile($file_data);
+
+	   		if(count($results->getData())>0)
+	   		{
+	   			return $this->sendResponse(
+		            $results->getMessage(),
+		            $results->getData()
+		        );
+
+	   		}else{
+	   			return $this->sendResponse(
+	                $results->getMessage(),
+	                [],
+	                403
+	            );
+
+	   		}
+	   	}
+	   	else
+	   	{
+	   		return $this->sendResponse(
+	                "Error While Uploading! Try Again!",
+	                [],
+	                403
+	            );
+	   	}
    	}
 }

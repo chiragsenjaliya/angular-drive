@@ -19,7 +19,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
-        \Barryvdh\Cors\HandleCors::class,
+        
     ];
 
     /**
@@ -47,6 +47,7 @@ class Kernel extends HttpKernel
         'custom-provider' => [
             \SMartins\PassportMultiauth\Http\Middleware\AddCustomProvider::class,
             \SMartins\PassportMultiauth\Http\Middleware\ConfigAccessTokenCustomProvider::class,
+            \Barryvdh\Cors\HandleCors::class,
         ]
     ];
 

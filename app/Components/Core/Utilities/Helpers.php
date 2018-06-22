@@ -177,4 +177,5 @@ class Helpers
 
         return !empty($d['scheme']);
     }
+    
 }
