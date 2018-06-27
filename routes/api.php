@@ -15,14 +15,14 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['api']], function () {
 	//User Controller
-	Route::post('logout','Drive\\UserController@logout')->name('logout');	
+	Route::post('logout','Drive\UserController@logout')->name('logout');	
 
 	//FolderFile Controller
-	Route::get('folder-tree/{slug?}','Drive\\FolderFileController@folderList')->name('folderList');
-	Route::post('create-folder','Drive\\FolderFileController@createFolder')->name('createFolder');
-	Route::get('get-folders-files/{slug?}','Drive\\FolderFileController@getFileFolder')->name('getFileFolder');
-	Route::post('upload-file','Drive\\FolderFileController@uploadFile')->name('uploadFile');
-	Route::get('file-download/{slug?}','Drive\\FolderFileController@getDownload')->name('getDownload');
+	Route::get('folder-tree/{slug?}','Drive\FolderFileController@folderList')->name('folderList');
+	Route::post('create-folder','Drive\FolderFileController@createFolder')->name('createFolder');
+	Route::get('get-folders-files/{slug?}','Drive\FolderFileController@getFileFolder')->name('getFileFolder');
+	Route::post('upload-file','Drive\FolderFileController@uploadFile')->name('uploadFile');
+	Route::get('file-download/{slug?}','Drive\FolderFileController@getDownload')->name('getDownload');
 	
 });
 
