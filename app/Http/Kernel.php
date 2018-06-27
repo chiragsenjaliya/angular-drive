@@ -47,7 +47,6 @@ class Kernel extends HttpKernel
         'custom-provider' => [
             \SMartins\PassportMultiauth\Http\Middleware\AddCustomProvider::class,
             \SMartins\PassportMultiauth\Http\Middleware\ConfigAccessTokenCustomProvider::class,
-            \Barryvdh\Cors\HandleCors::class,
         ]
     ];
 

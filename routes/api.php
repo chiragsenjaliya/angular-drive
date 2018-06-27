@@ -22,6 +22,7 @@ Route::group(['middleware' => ['api']], function () {
 	Route::post('/create-folder','Drive\\FolderFileController@createFolder')->name('createFolder');
 	Route::get('/get-folders-files/{slug?}','Drive\\FolderFileController@getFileFolder')->name('getFileFolder');
 	Route::post('/upload-file','Drive\\FolderFileController@uploadFile')->name('uploadFile');
+	Route::get('/file-download/{slug?}','Drive\\FolderFileController@getDownload')->name('getDownload');
 	
 });
 

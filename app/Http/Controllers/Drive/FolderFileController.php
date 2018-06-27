@@ -10,6 +10,7 @@ use Auth;
 use File;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Response;
 
 class FolderFileController extends Controller
 {
@@ -241,6 +242,7 @@ class FolderFileController extends Controller
    					'is_folder'=>$value->is_folder,
    					'id'=>$value->slug,
    					'file_type'=>$file_type,
+   					'type'=>$value->mime_type,
    					'url'=>$path,
    					'meta_data'=>json_decode($value->meta_data,true)
    				];
@@ -323,4 +325,14 @@ class FolderFileController extends Controller
 	            );
 	   	}
    	}
+
+   	public function getDownload($slug)
+	{
+	    $file=$this->folderRepository->getFolderBySlug($slug);
+	    //PDF file is stored under project/public/download/info.pdf
+	    $file_path=public_path('storage/'.Auth::guard('api')->user()->id.'/'.$this->getFolderPath($file->parent_id,'').$file->name);
+
+	     $res_file=file_get_contents($file_path);
+	    return  $res_file;
+	}
 }
