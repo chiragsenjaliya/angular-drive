@@ -26,4 +26,4 @@ Route::group(['middleware' => ['api']], function () {
 	
 });
 
-Route::post('register','Drive\\UserController@registerUser')->name('register');
+Route::post('register','Drive\UserController@registerUser')->name('register');
