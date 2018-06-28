@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['api']], function () {
+Route::group(['middleware' => ['auth:api']], function () {
 	//User Controller
 	Route::post('logout','Drive\UserController@logout')->name('logout');	
 

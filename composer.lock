@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5dcaedeed8c53a2dc302346b88aa059",
+    "content-hash": "464cb0428332c9ec4050bfdb91fe3ba7",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -884,16 +884,16 @@
         },
         {
             "name": "laravel/passport",
-            "version": "v5.0.3",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/passport.git",
-                "reference": "9dbcc3d6f8f20f1a83cbef73bbb563ce59e43ded"
+                "reference": "3abbbca3c58a1a07968bd94096a31891fdb48cad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/passport/zipball/9dbcc3d6f8f20f1a83cbef73bbb563ce59e43ded",
-                "reference": "9dbcc3d6f8f20f1a83cbef73bbb563ce59e43ded",
+                "url": "https://api.github.com/repos/laravel/passport/zipball/3abbbca3c58a1a07968bd94096a31891fdb48cad",
+                "reference": "3abbbca3c58a1a07968bd94096a31891fdb48cad",
                 "shasum": ""
             },
             "require": {
@@ -907,8 +907,8 @@
                 "illuminate/encryption": "~5.6",
                 "illuminate/http": "~5.6",
                 "illuminate/support": "~5.6",
-                "league/oauth2-server": "^6.0",
-                "php": ">=7.0",
+                "league/oauth2-server": "^7.0",
+                "php": ">=7.1",
                 "phpseclib/phpseclib": "^2.0",
                 "symfony/psr-http-message-bridge": "~1.0",
                 "zendframework/zend-diactoros": "~1.0"
@@ -949,7 +949,7 @@
                 "oauth",
                 "passport"
             ],
-            "time": "2018-03-15T12:39:02+00:00"
+            "time": "2018-06-20T14:33:24+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1208,34 +1208,36 @@
         },
         {
             "name": "league/oauth2-server",
-            "version": "6.1.1",
+            "version": "7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-server.git",
-                "reference": "a0cabb573c7cd5ee01803daec992d6ee3677c4ae"
+                "reference": "8184f771d43ea7305ddbb893d0daf6f0352ec5fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/a0cabb573c7cd5ee01803daec992d6ee3677c4ae",
-                "reference": "a0cabb573c7cd5ee01803daec992d6ee3677c4ae",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/8184f771d43ea7305ddbb893d0daf6f0352ec5fd",
+                "reference": "8184f771d43ea7305ddbb893d0daf6f0352ec5fd",
                 "shasum": ""
             },
             "require": {
                 "defuse/php-encryption": "^2.1",
                 "ext-openssl": "*",
-                "lcobucci/jwt": "^3.1",
+                "lcobucci/jwt": "^3.2.2",
                 "league/event": "^2.1",
-                "paragonie/random_compat": "^2.0",
-                "php": ">=5.6.0",
-                "psr/http-message": "^1.0"
+                "php": ">=7.0.0",
+                "psr/http-message": "^1.0.1"
             },
             "replace": {
                 "league/oauth2server": "*",
                 "lncd/oauth2": "*"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8.38 || ^5.7.21",
-                "zendframework/zend-diactoros": "^1.0"
+                "phpstan/phpstan": "^0.9.2",
+                "phpstan/phpstan-phpunit": "^0.9.4",
+                "phpstan/phpstan-strict-rules": "^0.9.0",
+                "phpunit/phpunit": "^6.3 || ^7.0",
+                "zendframework/zend-diactoros": "^1.3.2"
             },
             "type": "library",
             "autoload": {
@@ -1272,7 +1274,7 @@
                 "secure",
                 "server"
             ],
-            "time": "2017-12-23T23:33:42+00:00"
+            "time": "2018-06-23T16:57:59+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1945,20 +1947,20 @@
         },
         {
             "name": "smartins/passport-multiauth",
-            "version": "v1.0.1",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sfelix-martins/passport-multiauth.git",
-                "reference": "8aa913a1ab03ba8e2eaecd5c12c4440714f24ac6"
+                "reference": "7fc57c0ac9aaaba9dc9ebeab1ea255aec8abe357"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sfelix-martins/passport-multiauth/zipball/8aa913a1ab03ba8e2eaecd5c12c4440714f24ac6",
-                "reference": "8aa913a1ab03ba8e2eaecd5c12c4440714f24ac6",
+                "url": "https://api.github.com/repos/sfelix-martins/passport-multiauth/zipball/7fc57c0ac9aaaba9dc9ebeab1ea255aec8abe357",
+                "reference": "7fc57c0ac9aaaba9dc9ebeab1ea255aec8abe357",
                 "shasum": ""
             },
             "require": {
-                "laravel/passport": "^2.0|^3.0|^4.0|^5.0",
+                "laravel/passport": "^3.0|^4.0|^5.0|^6.0",
                 "php": ">=5.6.4"
             },
             "require-dev": {
@@ -1995,7 +1997,7 @@
                 "multi-auth",
                 "passport"
             ],
-            "time": "2018-03-30T13:39:37+00:00"
+            "time": "2018-06-09T01:05:03+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3134,16 +3136,16 @@
         },
         {
             "name": "zendframework/zend-diactoros",
-            "version": "1.7.2",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-diactoros.git",
-                "reference": "741e7a571836f038de731105f4742ca8a164e43a"
+                "reference": "11c9c1835e60eef6f9234377a480fcec096ebd9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/741e7a571836f038de731105f4742ca8a164e43a",
-                "reference": "741e7a571836f038de731105f4742ca8a164e43a",
+                "url": "https://api.github.com/repos/zendframework/zend-diactoros/zipball/11c9c1835e60eef6f9234377a480fcec096ebd9e",
+                "reference": "11c9c1835e60eef6f9234377a480fcec096ebd9e",
                 "shasum": ""
             },
             "require": {
@@ -3162,12 +3164,22 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev",
-                    "dev-develop": "1.8.x-dev",
+                    "dev-master": "1.8.x-dev",
+                    "dev-develop": "1.9.x-dev",
                     "dev-release-2.0": "2.0.x-dev"
                 }
             },
             "autoload": {
+                "files": [
+                    "src/functions/create_uploaded_file.php",
+                    "src/functions/marshal_headers_from_sapi.php",
+                    "src/functions/marshal_method_from_sapi.php",
+                    "src/functions/marshal_protocol_version_from_sapi.php",
+                    "src/functions/marshal_uri_from_sapi.php",
+                    "src/functions/normalize_server.php",
+                    "src/functions/normalize_uploaded_files.php",
+                    "src/functions/parse_cookie_header.php"
+                ],
                 "psr-4": {
                     "Zend\\Diactoros\\": "src/"
                 }
@@ -3183,7 +3195,7 @@
                 "psr",
                 "psr-7"
             ],
-            "time": "2018-05-29T16:53:08+00:00"
+            "time": "2018-06-27T18:52:43+00:00"
         }
     ],
     "packages-dev": [

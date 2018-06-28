@@ -12,7 +12,6 @@ use App\Components\User\Repositories\MySQLCompanyRepository;
 use App\Components\FolderFile\Contracts\IFolderRepository;
 use App\Components\FolderFile\Repositories\MySQLFolderRepository;
 use Route;
-use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,18 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Passport::routes();
-        
+              
         Schema::defaultStringLength(191);
 
         Resource::withoutWrapping();
-
-        // Middleware `api` that contains the `custom-provider` middleware group defined on $middlewareGroups above
-        Route::group(['middleware' => 'api'], function () {
-            Passport::routes(function ($router) {
-                return $router->forAccessTokens();
-            });
-        });
+        
     }
 
     /**
